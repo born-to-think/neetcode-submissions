@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void dfs(int node, vector<vector<int>>&graph, vector<bool>&vis){
+        vis[node]=true;
+        for(int adj:graph[node]){
+            if(!vis[adj])dfs(adj,graph,vis);
+        }
+    }
+    int countComponents(int n, vector<vector<int>>& edges) {
+        vector<vector<int>>graph(n);
+        vector<bool>vis(n,false);
+
+        for(auto&edge:edges){
+            graph[edge[0]].push_back(edge[1]);
+            graph[edge[1]].push_back(edge[0]);
+        }
+
+        int cnt = 0;
+        for(int i = 0;i<n;i++){
+            if(!vis[i]){
+                cnt++;
+                dfs(i,graph,vis);
+            }
+        }
+        return cnt; 
+    }
+};
